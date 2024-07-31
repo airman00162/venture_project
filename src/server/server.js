@@ -67,11 +67,47 @@ passport.use(
           profile.emails[0].value,
         ]);
 
+        // 이미 계정이 있으면 패스
         if (!user.rows[0]) {
+          // 닉네임 길이 제한, 6자리 남기고 자르기
+          let byteSize = 0;
+          let nickname = "";
+
+          for (let i = 0; i < profile.displayName.length; i++) {
+            const char = profile.displayName.charAt(i);
+
+            // 한글인지 확인 (유니코드 범위로 확인)
+            if (char.charCodeAt(0) >= 0xac00 && char.charCodeAt(0) <= 0xd7a3) {
+              byteSize += 2;
+            } else {
+              byteSize += 1;
+            }
+            // 중복일 때 붙일 숫자 자리까지 남겨놓게 8
+            if (byteSize > 8) {
+              break;
+            } else {
+              nickname += char;
+            }
+          }
+
+          // 구글 닉네임은 중복 가능이라 중복확인하고 닉넴 뒤에 번호 붙이기
+          let count = 1;
+          let newNickname = nickname;
+          while (true) {
+            const nicknameCheck = await pool.query(
+              "SELECT * FROM users WHERE nickname = $1",
+              [newNickname]
+            );
+            if (!nicknameCheck.rows[0]) {
+              break;
+            }
+            newNickname = `${nickname}_${count}`;
+            count++;
+          }
           // 사용자가 없으면 생성
           const newUser = await pool.query(
             "INSERT INTO users (email, nickname, is_social) VALUES ($1, $2, $3) RETURNING *",
-            [profile.emails[0].value, profile.displayName, true]
+            [profile.emails[0].value, newNickname, true]
           );
           user = newUser;
         }
@@ -114,7 +150,6 @@ app.get("/check-session", (req, res) => {
     console.log(1);
     res.json({ loggedIn: true, user: req.user });
   } else {
-    console.log(2);
     res.json({ loggedIn: false });
   }
 });
@@ -135,6 +170,39 @@ app.post("/signup", async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ message: "Server error" });
+  }
+});
+// 아이디 중복 확인 엔드포인트
+app.post("/check-email", async (req, res) => {
+  const { email } = req.body;
+  try {
+    const result = await pool.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
+    if (result.rows.length > 0) {
+      return res.json({ available: false });
+    }
+    return res.json({ available: true });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({ error: "Server error" });
+  }
+});
+
+// 닉네임 중복 확인 엔드포인트
+app.post("/check-nickname", async (req, res) => {
+  const { nickname } = req.body;
+  try {
+    const result = await pool.query("SELECT * FROM users WHERE nickname = $1", [
+      nickname,
+    ]);
+    if (result.rows.length > 0) {
+      return res.json({ available: false });
+    }
+    return res.json({ available: true });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({ error: "Server error" });
   }
 });
 

@@ -6,7 +6,6 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "connect-pg-simple": "^9.0.1",
     "cors": "^2.8.5",

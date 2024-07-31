@@ -35,3 +35,7 @@ const useCheckSession = () => {
 };
 
 export default useCheckSession;
+
+// 로그인 유무가 필요한 곳에 사용
+// import useCheckSession from "./useCheckSession";
+// const { isLoggedIn, user } = useCheckSession();
