@@ -1,38 +1,1019 @@
-.App {
+/* 기본 설정 */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+}
+
+/* 컨테이너 설정 */
+.container {
+  display: grid;
+  grid-template-rows: auto 1fr 100px;
+  width: 100%;
+  height: 100%;
+}
+
+/* 헤더 스타일 */
+.header {
+  background-color: #2c3539;
+  padding: 1em 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 0 1em;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+.right-buttons {
+  display: flex;
+  gap: 1em;
+}
+
+.icon {
+  width: auto;
+  height: 24px;
+  max-width: 100%;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-center {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
   text-align: center;
+  align-items: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.nav-center h1 {
+  color: white;
+  margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* 콘텐츠 설정 */
+.content {
+  display: grid;
+  grid-template-columns: 20vw 1fr 20vw;
+  grid-template-rows: 1fr;
+  grid-row: 2;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* AsideLeft */
+.aside-left {
+  background-color: #fffff0;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.RS {
+  width: 80%;
+  max-width: 1200px; /* 최대 너비 제한을 추가하여 큰 화면에서도 보기 좋도록 */
+  background-color: #292929;
+  color: wheat;
+  border: 3px solid #ccc;
+  padding: 10px;
+  margin-top: 20px;
+  position: sticky;
+  top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+.RS .box {
+  width: 100%;
+  border: 3px solid #ccc;
+  margin: 5px;
+  overflow: hidden; /* 이미지가 박스를 넘지 않도록 숨김 */
+  border-radius: 8px; /* 둥근 모서리로 디자인 개선 */
+}
+
+.RS .box img {
+  width: 100%; /* 부모의 너비를 가득 채우기 */
+  height: auto; /* 이미지 비율 유지 */
+  object-fit: cover; /* 이미지가 박스를 꽉 채우도록 조정 */
+  display: block; /* 이미지 주위의 공간 없애기 */
+}
+
+.RS .text {
+  display: block;
+  width: 100%; /* 전체 너비를 사용 */
+  max-width: 200px; /* 최대 너비 설정 */
+  text-overflow: ellipsis; /* 텍스트 잘림 표시 */
+  white-space: nowrap; /* 한 줄로 표시 */
+  overflow: hidden; /* 오버플로우 숨기기 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  padding: 5px 0; /* 패딩 추가로 텍스트 가독성 개선 */
+}
+
+/* 추천배너  찜버튼 */
+.box .button-group {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1em;
+}
+
+/* Main 영역 */
+.main,
+.login,
+.forgot-password,
+.signup,
+.wishlist,
+.vehicle-detail {
+  background-color: #f8f8f8;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.aside-right {
+  background-color: #fffff0;
+  grid-column: 3;
+  grid-row: 1;
+  text-align: center;
+  font-size: 20px;
+}
+
+/* 푸터 스타일 */
+.footer {
+  background-color: #8fbc8f;
+  text-align: center;
+  line-height: 100px;
+  grid-row: 3;
+  grid-column: 1;
+  text-align: center;
+  font-size: 20px;
+}
+
+/* 반응형 설정 */
+@media screen and (max-aspect-ratio: 1/1) {
+  .content {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+
+  .main,
+  .login,
+  .forgot-password,
+  .signup,
+  .wishlist,
+  .vehicle-detail {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .login {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .aside-left {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .aside-right {
+    grid-column: 1;
+    grid-row: 3;
+  }
+}
+
+/* 메인 영역의 CSS 시작 */
+/* 필터 섹션 스타일 */
+.filter-section {
+  padding: 1em;
+  text-align: center;
+}
+
+.filter-section input {
+  padding: 0.5em;
+  font-size: 1em;
+  width: 350px;
+  max-width: 80%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 0.5em;
+}
+
+.filter-section button {
+  padding: 0.5em 1em;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.filter-section button:hover {
+  background-color: #555;
+}
+
+/* 카테고리 섹션 스타일 */
+.categories-section {
+  display: flex;
+  justify-content: space-around;
+  box-sizing: border-box;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+}
+/* 모바일 화면 스타일 */
+@media (max-width: 768px) {
+  .filter-section,
+  .categories-section,
+  .price-filter-section,
+  .spec-filter-section {
+    max-width: 100%;
+    box-sizing: border-box; /* 패딩과 보더를 포함하여 너비 계산 */
+    margin: 0 auto; /* 섹션이 중앙에 위치하도록 설정 */
+  }
+}
+.category {
+  flex: 1;
+  text-align: center;
+  outline: 1px solid #2c3e50;
+  margin: 0;
+}
+
+.country-name {
+  font-weight: bold;
+  margin: 0;
+  background-color: #34495e;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  color: #74e8bd;
+}
+
+.country-divider {
+  border-bottom: 1px solid #2c3e50;
+  margin: 0;
+}
+
+.brand-grid {
+  display: flex;
+  grid-column-gap: 10px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-bottom: 0;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.brand-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-card:hover {
+  transform: scale(1.1);
+  background-color: #e7f9ff;
+  border-radius: 6px;
+}
+
+.brand-card.selected {
+  transform: scale(1.1);
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px #0096d2;
+  background-color: #e7f9ff;
+}
+
+.brand-card {
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: transparent;
+  width: 60px;
+  height: 60px;
+  margin-top: 6px;
+  margin-bottom: 5px;
+}
+
+.brand-logo {
+  width: 60px;
+  height: auto;
+}
+
+.brand-name {
+  color: black;
+  font-size: 10px;
+  font-weight: bold;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 가격 필터 섹션 스타일 */
+.price-filter-section {
+  text-align: center;
+  margin: 1em 0;
+}
+
+.price-filter-section input {
+  padding: 0.5em;
+  font-size: 1em;
+  width: 150px;
+  max-width: 80%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 0.5em;
+}
+
+.price-filter-section button {
+  padding: 0.5em 1em;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.price-filter-section button:hover {
+  background-color: #555;
+}
+
+/* 전체 필터 섹션을 감싸는 컨테이너 스타일 */
+.spec-filter-section {
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  width: 640px;
+  box-sizing: border-box;
+}
+
+/* 필터 카테고리와 옵션 정렬을 위한 스타일 */
+.filter-category {
+  display: flex;
+  margin-bottom: 0px;
+  padding-bottom: 10px;
+}
+
+.filter-label {
+  background-color: #e0e0e0; /* 라벨 컬럼에 다른 배경색 적용 */
+  text-align: center;
+  min-width: 50px;
+  max-width: 45px;
+  min-height: 40px;
+  max-height: 40px;
+  border-right: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center; /* 좌우 중앙 정렬 */
+  align-items: center; /* 상하 중앙 정렬 */
+  border-radius: 5px;
+}
+
+.filter-options {
+  display: grid; /* 그리드 레이아웃으로 변경 */
+  grid-template-columns: repeat(5, 1fr); /* 5열로 균등 분할 */
+  gap: 0.5em; /* 버튼 사이 간격 설정 */
+  width: 100%; /* 전체 너비 사용 */
+  padding-left: 5px;
+  box-sizing: border-box; /* 박스 크기를 포함하여 계산 */
+}
+
+.type-button,
+.engine-button,
+.fuel-efficiency-button,
+.power-button {
+  width: 100%; /* 버튼이 그리드 셀을 가득 채우도록 설정 */
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 0.9rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.type-button:hover,
+.engine-button:hover,
+.fuel-efficiency-button:hover,
+.power-button:hover {
+  background-color: #e7f9ff;
+}
+
+.type-button.selected,
+.engine-button.selected,
+.fuel-efficiency-button.selected,
+.power-button.selected {
+  background-color: #0096d2;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.toggle-expand-button {
+  grid-column: 1 / -1; /*  열을 가로질러 토글버튼 배치 */
+  justify-self: center; /* 토글버튼 중앙 에 두는법 */
+  margin-top: 10px;
+  padding: 0.5em 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.toggle-expand-button:hover {
+  background-color: #e7f9ff;
+}
+
+/* 반응형 웹 디자인을 위한 미디어 쿼리 */
+@media (max-width: 1024px) {
+  .spec-filter-section {
+    max-width: 100%;
   }
-  to {
-    transform: rotate(360deg);
+
+  .filter-label {
+    font-size: 14px;
+    padding: 8px;
+    min-width: 70px;
   }
+
+  .filter-options {
+    gap: 0.3em; /* 중간 화면에서 버튼 사이 간격 줄이기 */
+  }
+}
+
+@media (max-width: 768px) {
+  .spec-filter-section {
+    max-width: 100%;
+    padding: 5px;
+  }
+
+  .filter-label {
+    width: 100%;
+    text-align: left;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 14px;
+    min-width: 0px;
+  }
+
+  .filter-options {
+    width: 100%;
+  }
+
+  .type-button,
+  .engine-button,
+  .fuel-efficiency-button,
+  .power-button {
+    font-size: 1rem;
+    padding: 0.4em 0;
+  }
+}
+
+/* 드롭다운 메뉴바 섹션 스타일 */
+.dropdown-section {
+  text-align: center;
+  margin: 2em 0;
+  margin-left: 7%;
+  display: inline-block;
+}
+
+.dropdown {
+  padding: 0.5em;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdown:hover {
+  background-color: #e7f9ff;
+}
+
+/* 차량 섹션 스타일 */
+.vehicles-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1em;
+  padding: 1em;
+}
+
+.vehicle-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 272px;
+  padding: 0 0.3em;
+}
+
+.vehicle-card img {
+  width: 100%;
+  height: auto;
+}
+
+.vehicle-card h2 {
+  font-size: 1.5em;
+  margin: 0.5em 0;
+  text-align: center;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vehicle-card h3 {
+  font-size: 1em;
+  margin: 0.5em;
+  text-align: center;
+}
+
+.vehicle-card .info {
+  display: flex;
+  justify-content: center;
+  margin: 0.1em 0.2em;
+}
+
+.vehicle-card .info-label {
+  flex: 0.5;
+  text-align: left;
+  font-weight: bold;
+}
+
+.vehicle-card .info-value {
+  flex: 0.5;
+  text-align: right;
+  font-weight: bold;
+  color: #808080;
+  white-space: nowrap;
+}
+
+.vehicle-card .brand-logo {
+  width: 50px;
+  height: auto;
+  display: inline;
+  margin-top: 2%;
+  margin-right: 7%;
+}
+
+.vehicle-card .release-date {
+  background-color: #fbf8f3;
+  color: black;
+  border-radius: 8px;
+  width: 50%;
+  display: inline-block;
+  text-align: center;
+}
+
+.vehicle-card .text-card {
+  background-color: #fbf8f3;
+  color: black;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  padding: 5px;
+}
+
+/* 상세보기 찜버튼 */
+.vehicle-card .button-group {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1em;
+}
+
+.detail-button,
+.like-button {
+  padding: 0.5em 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.detail-button:hover,
+.like-button:hover {
+  background-color: #555;
+}
+
+/* 상세보기 영역 CSS 시작 */
+.vehicle-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em;
+  position: relative;
+}
+
+.vehicle-detail-card {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 30px;
+  background-color: #f9f9f9;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 상세보기 이미지 */
+.vehicle-image-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  text-align: center;
+}
+
+.image-container h2 {
+  margin: 0;
+}
+
+.vehicle-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0;
+}
+
+.top-text {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #292929;
+  color: wheat;
+  border-top-left-radius: 10px; /* 텍스트 박스 모서리 둥글게 */
+  border-top-right-radius: 10px; /* 텍스트 박스 모서리 둥글게 */
+}
+
+.middle-text {
+  position: absolute;
+  bottom: -29px; /* Adjust the value to control the overlap */
+  left: 0;
+  width: 100%;
+  background-color: transparent; /* Semi-transparent background */
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.middle-text .release-year {
+  font-size: 1.5em;
+  background-color: #434343;
+  color: #ffe4e1;
+  width: 10%;
+  min-width: 110px;
+  border-radius: 10px;
+  display: inline-block;
+  margin: 0;
+}
+.bottom-text {
+  position: absolute;
+  bottom: -18rem; /* Adjust the value to control the overlap */
+  width: 100%;
+  background-color: transparent; /* Semi-transparent background */
+  text-align: right;
+  text-align: bottom;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.bottom-text .like-button {
+  padding: 0.5em 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  display: inline-block;
+  margin: 0;
+}
+.bottom-text .like-button:hover {
+  background-color: #555;
+}
+/* 상세보기 스펙 */
+.vehicle-specs {
+  margin-bottom: 20px;
+  width: 96%;
+  padding: 2%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #292929;
+  color: wheat;
+  border-bottom-left-radius: 10px; /* 텍스트 박스 모서리 둥글게 */
+  border-bottom-right-radius: 10px; /* 텍스트 박스 모서리 둥글게 */
+}
+
+.vehicle-specs h2 {
+  margin-top: 0px;
+}
+/* 상세보기 색상 섹션 */
+.vehicle-colors {
+  width: 80%;
+  margin-top: 1em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.vehicle-colors h2 {
+  text-align: center;
+}
+
+.colors {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 50px;
+}
+
+.color-item {
+  width: 273px;
+  display: block;
+}
+
+.color-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+  width: 273px;
+  height: 60px;
+}
+
+.color {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.color-name {
+  text-align: center;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 상세보기 설명 섹션 */
+.vehicle-description {
+  margin-top: 2em;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  width: 96%;
+  padding: 2%;
+  padding-top: 0;
+  background-color: #292929;
+  color: wheat;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+/* 상세보기 영역 CSS 끝 */
+
+/*로그인, 회원가입 페이지 시작*/
+.name {
+  padding: 10px;
+  color: #e7f9ff;
+  background-color: #33691e;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+/* 로그인 회원가입 */
+/* Margin-bottom utilities */
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+/* Form control styling */
+.form-control {
+  display: inline-block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-sizing: border-box; /* 패딩과 보더를 포함하여 너비 계산 */
+}
+
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Grid display utility */
+.d-grid {
+  display: grid !important;
+}
+
+/* Button styling */
+.btn {
+  display: block; /* 블록 레벨 요소로 설정하여 너비를 100%로 채움 */
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-sizing: border-box; /* 패딩과 보더를 포함하여 너비 계산 */
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+  color: #fff;
+  background-color: #0056b3;
+  border-color: #004085;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+.btn-primary:disabled {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.navbar-light {
+  background-color: #ffffff;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+}
+
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: left;
+  padding: 0% 5%;
+  min-height: 100vh; /* 화면 전체 높이를 사용 */
+}
+
+.auth-inner {
+  max-width: 500px; /* 로그인 박스의 최대 너비 */
+  margin: auto;
+  background: #ffffff;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  padding: 40px 55px 45px 55px;
+  border-radius: 15px;
+  transition: all 0.3s;
+  box-sizing: border-box; /* 패딩과 보더를 포함하여 너비 계산 */
+}
+
+@media (max-width: 768px) {
+  .auth-wrapper {
+    max-width: 100%; /* 최대 너비를 100%로 설정 */
+  }
+}
+
+.auth-wrapper .form-control:focus {
+  border-color: #167bff;
+  box-shadow: none;
+}
+
+.auth-wrapper h3 {
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+  padding-bottom: 20px;
+}
+
+.custom-control-label {
+  font-weight: 400;
+}
+
+.password-login {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1em;
+}
+.login-switch,
+.login-switch a {
+  text-align: right;
+  font-size: 13px;
+  color: #7f7d7d;
+  margin: 0;
+}
+
+.login-switch a {
+  color: #167bff;
+}
+
+.forgot-password,
+.forgot-password a {
+  text-align: left;
+  font-size: 13px;
+  color: #7f7d7d;
+  margin: 0;
+}
+
+.forgot-password a {
+  color: #167bff;
+}
+
+.continue-p {
+  font-size: 12px;
+  color: #b2b2b2;
+  font-weight: 600;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/*로그인, 회원가입 페이지 끝*/
+
+/* 숫자 입력 버튼 수정*/
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }

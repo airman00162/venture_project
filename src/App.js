@@ -1,20 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import VehicleDetailPage from "./pages/VehicleDetailPage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import WishlistPage from "./pages/WishlistPage";
+import { AuthProvider } from "./context/AuthContext";
+import PrivateRoute from "./PrivateRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React!!
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <ToastContainer />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/vehicle/:vehicleId" element={<VehicleDetailPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route
+          path="/wishlist"
+          element={
+            <PrivateRoute>
+              <WishlistPage />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </AuthProvider>
   );
-}
+};
 
 export default App;
