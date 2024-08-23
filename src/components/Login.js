@@ -63,7 +63,7 @@ function Login() {
                 <a href="/forgot-password">비번 찾기</a>/비번 잊음
               </span>
               <span className="login-switch">
-                계정이 있다면/<a href="/signup">회원가입</a>
+                계정이 없다면/<a href="/signup">회원가입</a>
               </span>
             </div>
             <SignInwithGoogle /> {/* 구글 로그인 컴포넌트 포함 */}
