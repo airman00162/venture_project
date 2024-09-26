@@ -903,3 +903,28 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+/* quill css */
+.ql-editor {
+  background-color: white;
+  height: 600px;
+  border-radius: 00 15px 15px;
+}
+
+.ql-toolbar {
+  border-radius: 15px 15px 0 0;
+  background-color: white;
+}
+
+.ql-container.ql-snow {
+  height: 601px;
+  border-radius: 00 15px 15px;
+}
+
+.ql-toolbar.ql-snow {
+  margin-bottom: 0px;
+}
+
+.ql-fill {
+  color: #fff !important;
+}

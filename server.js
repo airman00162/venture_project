@@ -2,6 +2,7 @@ const express = require("express");
 const { Pool } = require("pg");
 const cors = require("cors");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -16,7 +17,13 @@ const pool = new Pool({
 });
 
 // CORS 미들웨어 사용
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // 클라이언트의 도메인
+    credentials: true, // 쿠키를 허용합니다
+  })
+);
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "build")));
 
@@ -163,6 +170,246 @@ app.get("/api/vehicles/:id", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Database query failed" }); // 오류 처리
+  }
+});
+
+// 게시글 작성
+app.post("/api/posts", async (req, res) => {
+  const { title, content, category, email } = req.body;
+
+  // 필수 필드 검증 - 없어도 될 듯
+  if (!title || !content || !category || !email) {
+    return res.status(400).json({ error: "모든 필드를 입력해 주세요." });
+  }
+
+  try {
+    // 반환 받은 post는 추후 제거
+    // 게시글을 데이터베이스에 삽입
+    const result = await pool.query(
+      "INSERT INTO posts (title, content, author, category) VALUES ($1, $2, $3, $4) RETURNING *",
+      [title, content, email, category]
+    );
+
+    const newPost = result.rows[0];
+
+    // 성공 응답
+    res
+      .status(201)
+      .json({ message: "게시글이 성공적으로 등록되었습니다.", post: newPost });
+  } catch (error) {
+    console.error("Error creating post:", error);
+    res
+      .status(500)
+      .json({ error: "서버에 문제가 발생했습니다. 다시 시도해 주세요." });
+  }
+});
+
+// 게시글 목록 불러오기
+app.get("/api/posts", async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 20;
+  const offset = (page - 1) * limit;
+
+  const term = req.query.term;
+  const option = req.query.option;
+
+  console.log(term, option);
+
+  try {
+    // 검색 키워드가 없을 때
+    if (!term) {
+      console.log("키워드 ㄴㄴ");
+      let query = `
+      SELECT id, title, author, category, created_at, views
+      FROM posts
+      WHERE 1=1
+      ORDER BY id DESC
+      LIMIT $1 OFFSET $2
+    `;
+
+      // 전체 게시글 수 쿼리
+      let totalQuery = `
+      SELECT COUNT(*) AS count
+      FROM posts
+      WHERE 1=1
+    `;
+      const [result, totalResult] = await Promise.all([
+        pool.query(query, [limit, offset]),
+        pool.query(totalQuery),
+      ]);
+      const totalPosts = parseInt(totalResult.rows[0].count);
+      const totalPages = Math.ceil(totalPosts / limit);
+
+      // 클라이언트에 데이터 반환
+      res.json({
+        posts: result.rows,
+        totalPages: totalPages,
+      });
+    }
+    // 검색 키워드가 있을 때
+    else {
+      console.log("키워드 ㅇㅇ");
+      let query = `
+      SELECT id, title, author, category, created_at, views
+      FROM posts
+      WHERE 1=1
+    `;
+      if (option === "title") {
+        query += ` AND title LIKE $1`;
+      } else if (option === "titleAndContent") {
+        query += ` AND (title LIKE $1 OR content LIKE $1)`;
+      } else if (option === "author") {
+        query += ` AND author LIKE $1`;
+      }
+      query += `
+      ORDER BY id DESC
+      LIMIT $2 OFFSET $3
+    `;
+
+      // 전체 게시글 수 쿼리
+      let totalQuery = `
+      SELECT COUNT(*) AS count
+      FROM posts
+      WHERE 1=1
+    `;
+      if (option === "title") {
+        totalQuery += ` AND title LIKE $1`;
+      } else if (option === "titleAndContent") {
+        totalQuery += ` AND (title LIKE $1 OR content LIKE $1)`;
+      } else if (option === "author") {
+        totalQuery += ` AND author LIKE $1`;
+      }
+      const [result, totalResult] = await Promise.all([
+        pool.query(query, [`%${term}%`, limit, offset]),
+        pool.query(totalQuery, [`%${term}%`]),
+      ]);
+      const totalPosts = parseInt(totalResult.rows[0].count);
+      const totalPages = Math.ceil(totalPosts / limit);
+
+      // 클라이언트에 데이터 반환
+      res.json({
+        posts: result.rows,
+        totalPages: totalPages,
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// 해당 게시글 가져오기
+app.get("/api/post", async (req, res) => {
+  const postId = parseInt(req.query.postId) || 1;
+  const userCookieName = `viewed_post_${postId}`;
+
+  try {
+    // 쿠키 확인
+    if (!req.cookies[userCookieName]) {
+      await pool.query("UPDATE posts SET views = views + 1 WHERE id = $1", [
+        postId,
+      ]);
+
+      // 쿠키 설정 (1시간 동안 조회수 증가 방지)
+      res.cookie(userCookieName, "true", { maxAge: 3600000, httpOnly: true });
+    }
+
+    const query = `
+      SELECT 
+        title, 
+        content, 
+        author, 
+        category, 
+        created_at, 
+        is_edited, 
+        like_count, 
+        views
+      FROM posts
+      WHERE id = $1;
+    `;
+
+    const result = await pool.query(query, [postId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    const post = result.rows[0];
+
+    res.json(post);
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// 댓글 가져오기
+app.get("/api/getComments", async (req, res) => {
+  const postId = parseInt(req.query.postId) || 1;
+
+  try {
+    const query = `
+      SELECT 
+        id,
+        parent_id,
+        content,
+        author, 
+        created_at,
+        is_edited,
+        like_count
+      FROM comments
+      WHERE post_id = $1;
+    `;
+
+    const result = await pool.query(query, [postId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Comments not found" });
+    }
+
+    const comments = result.rows;
+
+    res.json(comments);
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// 댓글 등록
+app.post("/api/addComments", async (req, res) => {
+  const { postId, email, commentContent, parent_id } = req.body;
+  console.log(postId, email, commentContent, parent_id);
+
+  try {
+    // 댓글
+    if (parent_id === null) {
+      const result = await pool.query(
+        "INSERT INTO comments (post_id, author, content) VALUES ($1, $2, $3) RETURNING *",
+        [postId, email, commentContent]
+      );
+
+      res.status(201).json({
+        success: true,
+        comment: result.rows[0],
+      });
+    } else {
+      // 대댓글
+      const result = await pool.query(
+        "INSERT INTO comments (post_id, parent_id, author, content) VALUES ($1, $2, $3, $4) RETURNING *",
+        [postId, parent_id, email, commentContent]
+      );
+
+      res.status(201).json({
+        success: true,
+        comment: result.rows[0],
+      });
+    }
+  } catch (error) {
+    console.error("Error inserting comment:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "서버 오류가 발생했습니다." });
   }
 });
 
