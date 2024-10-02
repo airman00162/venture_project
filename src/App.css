@@ -7,6 +7,7 @@ html {
   height: 100%;
   font-family: Arial, sans-serif;
   background-color: #f8f8f8;
+  user-select: none;
 }
 
 /* 컨테이너 설정 */
@@ -392,7 +393,7 @@ nav ul li a:hover {
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
-  width: 640px;
+  max-width: 640px;
   box-sizing: border-box;
 }
 
@@ -494,6 +495,55 @@ nav ul li a:hover {
 }
 
 @media (max-width: 768px) {
+  .filter-section input {
+    font-size: 0.8em;
+    width: 60vw;
+  }
+  .filter-section button {
+    font-size: 0.8em;
+  }
+  .price-filter-section input {
+    font-size: 0.8em;
+    width: 25vw;
+  }
+  .price-filter-section button {
+    font-size: 0.8em;
+  }
+  .brand-grid {
+    display: flex;
+    grid-column-gap: 1.9vw;
+    justify-content: center;
+    padding-left: 1.2vw;
+    padding-right: 1.3vw;
+    margin-bottom: 0;
+    padding-top: 0.2vw;
+    padding-bottom: 0.2vw;
+  }
+  .brand-card {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: transparent;
+    width: 8.9vw;
+    height: 9vw;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+  }
+
+  .brand-logo {
+    width: 8.9vw;
+    height: 5.5vw;
+  }
+  .brand-name {
+    color: black;
+    font-size: 1.7vw;
+    font-weight: bold;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .spec-filter-section {
     max-width: 100%;
     padding: 5px;
@@ -504,7 +554,7 @@ nav ul li a:hover {
     text-align: left;
     border-right: none;
     border-bottom: 1px solid #ccc;
-    font-size: 14px;
+    font-size: 13px;
     min-width: 0px;
   }
 
@@ -516,17 +566,21 @@ nav ul li a:hover {
   .engine-button,
   .fuel-efficiency-button,
   .power-button {
-    font-size: 1rem;
+    font-size: 0.75rem;
     padding: 0.4em 0;
   }
 }
 
 /* 드롭다운 메뉴바 섹션 스타일 */
+.drop-reset {
+  display: flex;
+  justify-content: space-evenly;
+}
 .dropdown-section {
   text-align: center;
   margin: 2em 0;
-  margin-left: 7%;
   display: inline-block;
+  align-items: left;
 }
 
 .dropdown {
@@ -541,6 +595,30 @@ nav ul li a:hover {
 
 .dropdown:hover {
   background-color: #e7f9ff;
+}
+
+.reset-filter-section {
+  display: inline-block;
+  align-items: right;
+  text-align: center;
+  margin: 2em 0;
+  margin-left: 5em;
+}
+
+.reset-button {
+  padding: 0.5em 1em;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #0096d2;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.reset-button:hover {
+  color: white;
+  background-color: #e74c3c;
 }
 
 /* 차량 섹션 스타일 */
@@ -832,6 +910,13 @@ nav ul li a:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 /* 상세보기 영역 CSS 끝 */
+
+/* 찜목록 영역 시작*/
+.wishlist {
+  text-align: center;
+}
+
+/* 찜목록 영역 끝*/
 
 /*로그인, 회원가입 페이지 시작*/
 .name {
