@@ -1,18 +1,42 @@
 .postContainer {
-  width: 800px;
+  width: 100%;
+  max-width: 960px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+@media (max-width: 1000px) {
+  .postContainer {
+    padding: 0;
+    box-shadow: none;
+    min-width: 300px !important;
+    overflow: hidden;
+  }
+
+  .container {
+    width: calc(100% - 20px);
+    margin: 10px;
+
+  }
 }
 
 .title {
-  font-size: 28px;
+  font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
   color: #333;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .meta {
@@ -51,8 +75,9 @@
   color: #666;
   margin-bottom: 20px;
   border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
+  padding: 10px;
 }
+
 .likeAndEdit button {
   padding: 10px;
   border-radius: 10px;
@@ -136,6 +161,7 @@
 .commentInput {
   display: flex;
 }
+
 .commentInput .commentInputForm {
   display: flex;
   flex: 1;
@@ -150,6 +176,7 @@
   resize: none;
   border-radius: 0px;
 }
+
 .commentInput textarea {
   flex: 1;
   width: 100%;
@@ -170,7 +197,9 @@
   border: 0;
   border-radius: 10px;
   background-color: #ddd;
+  min-width: 100px;
 }
+
 .commentInput .commentInputButton:hover {
   background-color: #ccc;
 }

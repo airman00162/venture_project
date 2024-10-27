@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styles from "./PostList.module.css"; // CSS 모듈 import
 
 const PostList = () => {
-  const navigate = useNavigate();
   const location = useLocation();
 
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const POSTS_PER_PAGE = 10; // 페이지당 게시글 수
+  const POSTS_PER_PAGE = 20; // 페이지당 게시글 수
 
   const [keyword, setKeyword] = useState("");
   const [searchType, setSearchType] = useState("title");
@@ -112,8 +111,12 @@ const PostList = () => {
             <div className={styles.left}>{post.id}</div>
             <div className={styles.left}>[{post.category}]</div>
             <div className={styles.title}>
-              <a href={`/post/${post.id}`}>{post.title}</a>
+              <a href={`/post/${post.id}`}>
+                {post.title}
+                {post.comment_count ? (<span className={styles.comment_count}> {post.comment_count}</span>) : (null)}
+              </a>
             </div>
+            <div className={styles.title}></div>
             <div className={styles.right}>{maskEmail(post.author)}</div>
             {/* 닉네임으로 변환 */}
             <div className={styles.right}>{formatDate(post.created_at)}</div>

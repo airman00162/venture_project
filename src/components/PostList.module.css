@@ -1,6 +1,7 @@
 /* 컨테이너 스타일 */
 .postListContainer {
-  width: 1000px;
+  width: 100%;
+  max-width: 960px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -15,6 +16,39 @@
   margin: 20px 0;
 }
 
+@media (max-width: 1000px) {
+  .postListContainer {
+    max-width: 1000px;
+    padding: 0;
+    box-shadow: none;
+    min-width: 300px !important;
+  }
+
+  .container {
+    width: 100%;
+    min-width: 300px !important;
+  }
+
+  .searchAndWrite {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin: 30px 0;
+  }
+
+  .searchAndWrite .search {
+    display: flex;
+    justify-content: center !important;
+  }
+
+  .searchAndWrite .write {
+    margin-top: 10px;
+    justify-content: center !important;
+  }
+
+}
+
 .header,
 .row {
   display: flex;
@@ -23,6 +57,8 @@
 }
 
 .header {
+  position: sticky;
+  top: 60px;
   background-color: #2c3539;
   color: white;
   font-weight: bold;
@@ -33,11 +69,17 @@
 .title {
   padding: 3px;
   text-align: center;
+  white-space: nowrap;
 }
+
 .title {
   flex: 5;
   text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
+
 .title a {
   color: black;
   text-decoration: none;
@@ -53,6 +95,11 @@
 
 .right {
   flex: 1;
+}
+
+.comment_count {
+  color: #2c3539;
+  font-weight: bold;
 }
 
 .row:nth-child(even) {
@@ -91,10 +138,12 @@
   width: 100%;
   margin: 30px 0;
 }
+
 .searchAndWrite .search {
   display: flex;
   flex: 1;
 }
+
 .searchAndWrite .search select,
 .categories .sort select {
   box-sizing: border-box;
@@ -107,6 +156,7 @@
   border-radius: 8px;
   appearance: none;
 }
+
 .searchAndWrite .search input {
   box-sizing: border-box;
   height: 30px;
@@ -117,21 +167,23 @@
   border: 0;
   border-radius: 8px;
 }
+
 .searchAndWrite .search button {
   box-sizing: border-box;
   height: 30px;
   padding: 0 20px;
   margin: 0;
-  color: var(--default-font-color);
   background-color: #2c3539;
   color: white;
   border: 0;
   border-radius: 8px;
 }
+
 .searchAndWrite .write {
   display: flex;
   justify-content: flex-end;
 }
+
 .searchAndWrite .write a {
   display: flex;
   align-items: center;

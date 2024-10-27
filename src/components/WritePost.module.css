@@ -6,6 +6,12 @@
   font-family: Arial, sans-serif;
 }
 
+@media (max-width: 1000px) {
+  .postForm {
+    width: 100%;
+  }
+}
+
 .postForm form {
   display: flex;
   flex-direction: column;
@@ -27,6 +33,7 @@
   padding: 10px;
   box-sizing: border-box;
 }
+
 .postForm select {
   border-radius: 10px;
   border: 1px solid #ccc;

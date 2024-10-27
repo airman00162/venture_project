@@ -135,142 +135,144 @@ const Post = () => {
 
   return (
     <div className={styles.postContainer}>
-      <h1 className={styles.title}>
-        [{post.category}] {post.title}
-      </h1>
-      <div className={styles.meta}>
-        <div>
-          <span className={styles.author}>{maskEmail(post.author)}</span>
-          <span>•</span>
-          <span className={styles.date}>{formatDate(post.created_at)}</span>
-          <span>•</span>
-          <span className={styles.views}>👁️‍🗨️{post.views}</span>
-          <span>•</span>
-          <span className={styles.views}>👍{post.like_count}</span>
-          {post.is_edited ? (
-            <>
-              <span>•</span>
-              <span className={styles.views}>수정됨</span>
-            </>
-          ) : null}
+      <div className={styles.container}>
+        <h1 className={styles.title}>
+          [{post.category}] {post.title}
+        </h1>
+        <div className={styles.meta}>
+          <div>
+            <span className={styles.author}>{maskEmail(post.author)}</span>
+            <span>•</span>
+            <span className={styles.date}>{formatDate(post.created_at)}</span>
+            <span>•</span>
+            <span className={styles.views}>👁️‍🗨️{post.views}</span>
+            <span>•</span>
+            <span className={styles.views}>👍{post.like_count}</span>
+            {post.is_edited ? (
+              <>
+                <span>•</span>
+                <span className={styles.views}>수정됨</span>
+              </>
+            ) : null}
+          </div>
         </div>
-      </div>
 
-      <div
-        className={styles.content}
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
-      <div className={styles.likeAndEdit}>
-        <div></div>
-        <button>좋아요👍</button>
-        {/* 이미 좋아요 눌렀으면 안올라가게 + 색깔 변경? */}
-        <button>수정</button>
-        {/* 게시글 수정 */}
-      </div>
-      {comments.map((comment) => (
-        <div key={comment.id}>
-          {comment.parent_id === null && (
-            <div className={styles.comment}>
-              <div className={styles.commentHeader}>
-                <div className={styles.commentMeta}>
-                  <span className={styles.author}>{maskEmail(comment.author)}</span>
-                  <span className={styles.date}>
-                    {formatDate(comment.created_at)}
-                  </span>
-                  <span className={styles.edited}>{comment.is_edited}</span>
-                </div>
-                <div className={styles.likeContainer}>
-                  {comment.showReplyInput ? (
-                    <button
-                      onClick={() => handleToggleReplyInput(comment.id)}
-                      className={styles.likeAndReplyButton}
-                    >
-                      닫기
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleToggleReplyInput(comment.id)}
-                      className={styles.likeAndReplyButton}
-                    >
-                      댓글
-                    </button>
-                  )}
-                  <button className={styles.likeAndReplyButton}>
-                    좋아요👍({comment.like_count})
-                  </button>
-                </div>
-              </div>
-              <div className={styles.content}>{comment.content}</div>
-              {/* 대댓글 */}
-              {comment.showReplyInput ? (
-                <div className={styles.commentInput}>
-                  <form
-                    className={styles.commentInputForm}
-                    onSubmit={(e) => handleCommentSubmit(e, comment.id)}
-                  >
-                    <textarea
-                      value={commentContent[comment.id] || ""}
-                      onChange={(e) =>
-                        setCommentContent((prevState) => ({
-                          ...prevState,
-                          [comment.id]: e.target.value,
-                        }))
-                      }
-                      placeholder="댓글을 입력하세요..."
-                    />
-                    <button type="submit" className={styles.commentInputButton}>
-                      답글 작성
-                    </button>
-                  </form>
-                </div>
-              ) : null}
-            </div>
-          )}
-
-          {comments.map((reply) => (
-            <div key={reply.id}>
-              {reply.parent_id === comment.id && (
-                <div className={styles.reply}>
-                  <div className={styles.commentHeader}>
-                    <div className={styles.commentMeta}>
-                      <span className={styles.author}>{maskEmail(reply.author)}</span>
-                      <span className={styles.date}>
-                        {formatDate(reply.created_at)}
-                      </span>
-                      <span className={styles.edited}>{reply.is_edited}</span>
-                    </div>
-                    <div className={styles.likeContainer}>
-                      <button className={styles.likeAndReplyButton}>
-                        좋아요👍({reply.like_count})
-                      </button>
-                    </div>
+        <div
+          className={styles.content}
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
+        <div className={styles.likeAndEdit}>
+          <div></div>
+          <button>좋아요👍</button>
+          {/* 이미 좋아요 눌렀으면 안올라가게 + 색깔 변경? */}
+          <button>수정</button>
+          {/* 게시글 수정 */}
+        </div>
+        {comments.map((comment) => (
+          <div key={comment.id}>
+            {comment.parent_id === null && (
+              <div className={styles.comment}>
+                <div className={styles.commentHeader}>
+                  <div className={styles.commentMeta}>
+                    <span className={styles.author}>{maskEmail(comment.author)}</span>
+                    <span className={styles.date}>
+                      {formatDate(comment.created_at)}
+                    </span>
+                    <span className={styles.edited}>{comment.is_edited}</span>
                   </div>
-                  <div className={styles.content}>{reply.content}</div>
+                  <div className={styles.likeContainer}>
+                    {comment.showReplyInput ? (
+                      <button
+                        onClick={() => handleToggleReplyInput(comment.id)}
+                        className={styles.likeAndReplyButton}
+                      >
+                        닫기
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleToggleReplyInput(comment.id)}
+                        className={styles.likeAndReplyButton}
+                      >
+                        댓글
+                      </button>
+                    )}
+                    <button className={styles.likeAndReplyButton}>
+                      좋아요👍({comment.like_count})
+                    </button>
+                  </div>
                 </div>
-              )}
-            </div>
-          ))}
+                <div className={styles.content}>{comment.content}</div>
+                {/* 대댓글 */}
+                {comment.showReplyInput ? (
+                  <div className={styles.commentInput}>
+                    <form
+                      className={styles.commentInputForm}
+                      onSubmit={(e) => handleCommentSubmit(e, comment.id)}
+                    >
+                      <textarea
+                        value={commentContent[comment.id] || ""}
+                        onChange={(e) =>
+                          setCommentContent((prevState) => ({
+                            ...prevState,
+                            [comment.id]: e.target.value,
+                          }))
+                        }
+                        placeholder="댓글을 입력하세요..."
+                      />
+                      <button type="submit" className={styles.commentInputButton}>
+                        답글 작성
+                      </button>
+                    </form>
+                  </div>
+                ) : null}
+              </div>
+            )}
+
+            {comments.map((reply) => (
+              <div key={reply.id}>
+                {reply.parent_id === comment.id && (
+                  <div className={styles.reply}>
+                    <div className={styles.commentHeader}>
+                      <div className={styles.commentMeta}>
+                        <span className={styles.author}>{maskEmail(reply.author)}</span>
+                        <span className={styles.date}>
+                          {formatDate(reply.created_at)}
+                        </span>
+                        <span className={styles.edited}>{reply.is_edited}</span>
+                      </div>
+                      <div className={styles.likeContainer}>
+                        <button className={styles.likeAndReplyButton}>
+                          좋아요👍({reply.like_count})
+                        </button>
+                      </div>
+                    </div>
+                    <div className={styles.content}>{reply.content}</div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ))}
+        <div className={styles.commentInput}>
+          <form
+            className={styles.commentInputForm}
+            onSubmit={handleCommentSubmit}
+          >
+            <textarea
+              value={commentContent[null] || ""}
+              onChange={(e) =>
+                setCommentContent((prevState) => ({
+                  ...prevState,
+                  [null]: e.target.value,
+                }))
+              }
+              placeholder="댓글을 입력하세요..."
+            />
+            <button type="submit" className={styles.commentInputButton}>
+              답글 작성
+            </button>
+          </form>
         </div>
-      ))}
-      <div className={styles.commentInput}>
-        <form
-          className={styles.commentInputForm}
-          onSubmit={handleCommentSubmit}
-        >
-          <textarea
-            value={commentContent[null] || ""}
-            onChange={(e) =>
-              setCommentContent((prevState) => ({
-                ...prevState,
-                [null]: e.target.value,
-              }))
-            }
-            placeholder="댓글을 입력하세요..."
-          />
-          <button type="submit" className={styles.commentInputButton}>
-            답글 작성
-          </button>
-        </form>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ const express = require("express");
 const { Pool } = require("pg");
 const cors = require("cors");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -16,9 +17,15 @@ const pool = new Pool({
 });
 
 // CORS 미들웨어 사용
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000", // 클라이언트의 도메인
+  credentials: true, // 쿠키를 허용합니다
+}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "build")));
+
+// cookieParser 미들웨어 사용
+app.use(cookieParser());
 
 // 차량 데이터 조회 API
 // 필터링, 정렬, 페이지네이션을 포함한 데이터 조회를 처리합니다.
@@ -206,7 +213,7 @@ app.get("/api/posts", async (req, res) => {
     if (!term) {
       console.log("키워드 ㄴㄴ");
       let query = `
-      SELECT id, title, author, category, created_at, views
+      SELECT id, title, author, category, created_at, views, comment_count
       FROM posts
       WHERE 1=1
       ORDER BY id DESC

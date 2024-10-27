@@ -5,7 +5,7 @@ import Post from "../components/Post";
 
 const PostPage = () => {
   return (
-    <div className="container">
+    <div>
       <Header />
       <div>
         <Post />
