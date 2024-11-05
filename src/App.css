@@ -95,12 +95,16 @@ nav ul li a:hover {
 }
 
 /* 콘텐츠 설정 */
+
+
+
 .content {
   display: grid;
   grid-template-columns: 20vw 1fr 20vw;
   grid-template-rows: 1fr;
   grid-row: 2;
 }
+
 /* 추천배너 영역 시작*/
 .aside-left {
   background-color: #f8f8f8;
@@ -1092,3 +1096,474 @@ input[type="number"] {
 }
 
 /* 햄버거 버튼 끝*/
+
+
+/* ------------------------------- VehicleInfo / VehicleList css 시작 ------------------------------------*/
+
+/* 상단 네비게이션 스타일 */
+
+.review-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 중앙 정렬 */
+}
+
+.vehicle-name {
+  font-size: 2rem; /* 원하는 크기로 조절 */
+  margin-bottom: 10px; /* 네비게이션과 간격 조절 */
+  text-align: center;
+  
+}
+
+.review-nav ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 20px;
+  justify-content: center; /* 글자 정렬을 중앙으로 설정 */
+  
+}
+
+.review-nav li {
+  margin-right: 20px;
+}
+
+.review-nav a {
+  text-decoration: none !important; /* 밑줄 제거 */
+  color: #3d3d3d; /* 글자 색상 변경 */
+  font-weight: bold;
+}
+
+
+/* 섹션 스타일 */
+.test-container {
+  padding: 20px;
+  background-color: #e8e8e8;
+}
+
+.review-section {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.review-section:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5); /* 더 진한 그림자 효과 */
+}
+
+.review-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.review-section p {
+  white-space: normal; /* 줄바꿈을 포함하여 여러 줄을 표현 */
+  line-height: 1.5;
+  
+}
+
+/* 섹션 내부 이미지 스타일 */
+.section-image {
+  width: 95%; 
+  max-height: 400px; 
+  object-fit: cover; 
+  border: 5px solid #e4dbdb; 
+  border-radius: 10px; 
+  padding: 20px; 
+  
+}
+
+/* 섹션 제목과 아이콘을 같은 줄에 배치 */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* 아이콘 이미지 스타일 */
+.toggle-icon {
+  width: 24px; /* 아이콘 크기 조정 */
+  height: 24px;
+  margin-left: 10px; /* 제목과 아이콘 사이의 간격 */
+}
+/* test */
+.qna-content {
+  margin-top: 10px;
+}
+
+.qa-pair {
+  margin-bottom: 20px;
+}
+
+.question {
+  font-weight: bold;
+  color: #333;
+}
+
+
+
+/* 섹션이 펼쳐졌을 때 답변 표시 */
+.review-section .qa-pair .answer {
+  display: block;
+}
+
+/* QNA 섹션 타이틀과 질문의 실선 추가 */
+#qna .section-header {
+  border-bottom: 1px solid rgba(204, 204, 204, 0.3); /* QNA 타이틀 아래 실선 */
+  padding-bottom: 10px;
+}
+
+#qna .qa-pair {
+  border-bottom: 1px solid rgba(204, 204, 204, 0.3); /* QNA 질문 아래 실선 */
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+#qna.active .qa-pair {
+  border-bottom: none;
+}
+
+#qna .answer {
+  margin-left: 15px;
+  color: #4d4d4d;
+  line-height: 1.6;
+  background-color: #f5f5f5; /* 답변 텍스트 배경색 */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+
+.summary-header {
+  display: grid;
+  color: #131313;
+  text-shadow: 2px 2px 2px rgba(206, 206, 206, 0.3); 
+  font-weight: bold;
+  background-color: #d6d6d6;
+  padding: 0.2em 0.4em;
+  border-radius: 5px;
+  margin: 0 auto; 
+  width: fit-content; 
+}
+
+.summary-main {
+  color : #4d4d4d;
+}
+
+.section-title {
+  font-size: 1.2em; /* 텍스트 크기를 h2보다 작고 p보다는 크도록 설정 */
+  color: #555555; /* h2보다 은은한 색상 선택 */
+  font-weight: 600; /* p보다는 굵게 설정하여 강조 */
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  text-align: center; /* 가운데 정렬 */
+  border-bottom: 2px solid #d3d3d3; /* 밑줄로 강조 (선택 사항) */
+  padding-bottom: 0.3em; /* 밑줄과의 간격 추가 */
+}
+
+.summary-rating {
+  margin-left: 43%;
+  margin-right: 40%;
+  margin-top: 10px;
+  
+}
+
+.summary-rating img {
+  width: 20px;  /* 원하는 크기로 조정 */
+  height: 20px;  /* 가로 세로 비율을 같게 유지 */
+  margin-right: 4px;  /* 별 사이의 간격 조정 */
+}
+
+.section-main {
+  margin-bottom: 4em; /* 단락 간 여백 */
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 20px;
+  border: 2px solid #9b9b9b;
+}
+
+.section-subtitle {
+  font-size: 1.1em; /* 단락 제목을 약간 작게 설정 */
+    font-weight: bold; /* 강조된 텍스트 */
+    color: #000000; /* 제목 색상 */
+    margin-bottom: 0.5em; 
+}
+
+.section-text {
+  font-size: 1em;
+    line-height: 1.6;
+    color : #4d4d4d;
+}
+
+
+/* ------------------------------------사이트 좌측 사이드바 ----------------------*/
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px; /* 숨겨진 상태 */
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  padding-top: 60px;
+  transition: left 0.3s ease;
+  z-index: 1000; /* 위로 올라오게 설정 */
+  color: white;
+}
+
+/* 사이드바 열릴 때 */
+.sidebar.open {
+  left: 0; /* 화면에 나타남 */
+}
+
+/* 사이드바 내의 버튼 */
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 15px;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  display: block;
+}
+
+/* 사이드바 닫기 버튼 */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
+
+/* ------------------------------------리스트페이지 ----------------------*/
+
+/* 차량 평점 별 이미지 스타일 */
+.vehicle-rating img {
+  width: 20px;  /* 원하는 크기로 조정 */
+  height: 20px;  /* 가로 세로 비율을 같게 유지 */
+  margin-right: 4px;  /* 별 사이의 간격 조정 */
+}
+
+.vehicle-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 auto;
+  margin-left: 20px; /* AsideLeft와 떨어뜨리기 위해 여유 공간 추가 */
+  margin-right: 20px; /* AsideRight와 떨어뜨리기 위해 여유 공간 추가 */
+  margin-top: 20px;
+}
+
+.vehicle-card {
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  
+}
+
+.vehicle-image {
+  width: 100%;
+  height: 200px; /* 고정 높이 설정 */
+  object-fit: cover; /* 이미지 비율을 유지하면서 영역을 채움 */
+}
+
+.vehicle-card-link {
+  display: block;
+  text-decoration: none; /* 링크의 밑줄을 없앰 */
+  color: inherit; /* 텍스트 색상 상속 */
+}
+
+.vehicle-card strong {
+  font-weight: bold;
+  color: #ff6347; /* 강조 색상: 토마토 색상 */
+  padding: 2px 5px;
+  border-radius: 5px;
+  margin-right: 5%;
+}
+
+.vehicle-point {
+  font-weight: bold;
+  color: #ff6347; /* 강조 색상: 토마토 색상 */
+  padding: 2px 5px;
+  border-radius: 5px;
+  margin-right: 5px;
+  font-size: 1.5rem;
+}
+
+/* 장점 스타일 */
+.vehicle-card .plus {
+  color: #007BFF;      /* 파란색 글자 */
+  background-color: #E6F0FF;  /* 밝은 파란색 배경 */
+  
+}
+
+/* 단점 스타일 */
+.vehicle-card .minus {
+  color: #FF4500;      /* 빨간색 글자 */
+  background-color: #FFE6E6;  /* 밝은 빨간색 배경 */
+}
+
+
+
+
+.load-more-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.load-more-btn:hover {
+  background-color: #0056b3;
+}
+
+/* 검색 바 전체 컨테이너 */
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* 검색창 스타일 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 600px;
+  padding: 10px 15px;
+  border: 1px solid #dcdcdc;
+  border-radius: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+/* 검색 아이콘 */
+.search-bar img.search-icon {
+  width: 18px;
+  margin-right: 10px;
+}
+
+/* 입력 필드 */
+.search-bar input[type="text"] {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+/* 검색 버튼 */
+.search-bar button {
+  display: none; /* 버튼을 숨기거나 필요한 경우 스타일 적용 */
+}
+
+
+@media (max-width: 480px) {
+  .review-nav ul {
+    font-size: 0.5em;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 119%;
+    padding: 0;
+  }
+  .review-nav ul li {
+    margin: 0 11px;
+  }
+  .section-image {
+    width: 80%;
+  }
+  .summary-header {
+    font-size: 0.9em;
+  }
+  .summary-rating {
+    margin-left: 28%;
+    width: 80%;
+  }
+  .section-title {
+    font-size: 0.7em;
+  }
+  .section-header h2 {
+    font-size: 1em;
+  }
+  
+  .search-container {
+    width: 50%;
+    margin-left: 4%;
+  }
+  .test-container {
+    overflow-x: hidden;
+  }
+  .vehicle-list {
+    flex-direction: column; /* 세로로 배치 */
+    align-items: center; /* 가운데 정렬 */
+    display: block;
+    width: 50%;
+    margin-left: 0;
+  }
+ 
+  .load-more-btn {
+    margin-left: 20%;
+  }
+  .list-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 10%;
+  }
+
+  .list-container .aside-left {
+    width: 55%;
+    
+    
+  }
+  .list-container .aside-right {
+    width: 55%;
+    
+  }
+  .sans .content {
+    grid-template-columns: 1fr;
+    grid-template-rows: 10fr 0.1fr 0.1fr;
+  }
+  .sans .aside-left {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .sans .aside-right {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .papyrus .content {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0.01fr 0.01fr;
+  }
+  .papyrus .aside-left {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .papyrus .aside-right {
+    grid-column: 1;
+    grid-row: 3;
+  }
+}
+
+/* ------------------------------- VehicleInfo / VehicleList css 끝 ------------------------------------*/

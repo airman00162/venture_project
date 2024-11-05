@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const port = process.env.PORT || 3001;
 
+
 // PostgreSQL 연결 설정
 // 실제 환경에서는 비밀번호와 데이터베이스 설정을 환경 변수로 관리하는 것이 좋습니다.
 const pool = new Pool({
@@ -14,6 +15,15 @@ const pool = new Pool({
   database: "postgres",
   password: "5432", // 실제 비밀번호로 대체
   port: 5432,
+});
+
+// 이차어때 PostgreSQL 연결 설정
+const enca = new Pool({
+  user: 'postgres', // PostgreSQL 사용자명
+  host: 'localhost', // PostgreSQL 서버 호스트
+  database: 'enca', // 데이터베이스 이름
+  password: 'postgres', // 비밀번호
+  port: 5432, // PostgreSQL 기본 포트
 });
 
 // CORS 미들웨어 사용
@@ -390,6 +400,63 @@ app.post("/api/addComments", async (req, res) => {
   }
 });
 
+
+// 이차어때 페이지
+// enca 데이터베이스에서 데이터를 가져오는 API Listpage에서 사용
+app.get('/api/encavehicles', async (req, res) => {
+  try {
+    const result = await enca.query('SELECT * FROM vehicles');
+    res.json(result.rows);  // 모든 차량 데이터를 반환
+  } catch (err) {
+    console.error('Error fetching data from database:', err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// 특정 차량번호에 맞는 데이터를 가져오는 API (추가할 코드) testpage에서 사용
+app.get('/api/encavehicles/:vehicleId', async (req, res) => {
+  const { vehicleId } = req.params;
+  try {
+    const result = await enca.query('SELECT * FROM vehicles WHERE 차량번호 = $1', [vehicleId]);
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      console.error(`Vehicle with 차량번호 ${vehicleId} not found`);
+      res.status(404).send('Vehicle not found');
+    }
+  } catch (err) {
+    console.error(`Error fetching vehicle data for 차량번호 ${vehicleId}:`, err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// 모든 차량 데이터 조회 예제
+app.get('/api/vehicles', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM vehicle');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Database query failed' });
+  }
+});
+
+// 특정 차량 데이터 조회 예제
+app.get('/api/vehicles/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query('SELECT * FROM vehicle WHERE 차량번호 = $1', [id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Vehicle not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Database query failed' });
+  }
+});
+
+
 // React 앱 제공
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html")); // React 빌드 파일 제공
@@ -399,3 +466,4 @@ app.get("*", (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+

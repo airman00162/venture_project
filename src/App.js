@@ -7,6 +7,8 @@ import WishlistPage from "./pages/WishlistPage";
 import WritePostPage from "./pages/WritePostPage";
 import PostListPage from "./pages/PostListPage";
 import PostPage from "./pages/PostPage";
+import InfoPage from "./pages/InfoPage";
+import ListPage from './pages/ListPage';
 import "./App.css";
 
 const App = () => {
@@ -19,6 +21,9 @@ const App = () => {
       <Route path="/write" element={<WritePostPage />} />
       <Route path="/postlist" element={<PostListPage />} />
       <Route path="/post/:postId" element={<PostPage />} />
+      <Route path="/infopage" element={<InfoPage />} />
+      <Route path="/list" element={<ListPage />} />
+      <Route path="/vehicles/:vehicleId" element={<InfoPage />} />
     </Routes>
   );
 };

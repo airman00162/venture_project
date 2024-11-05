@@ -66,7 +66,7 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to="/review" onClick={toggleMenu}>
+              <Link to="/list" onClick={toggleMenu}>
                 이차어때
               </Link>
             </li>
